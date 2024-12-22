@@ -1,0 +1,163 @@
+
+ASSIGNMENT -1
+MOHIT KUMAR SHARMA  ( G16SQL&PowerBI)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. Total number of employees :-
+
+SELECT COUNT(*) AS total_employees FROM EMP;
+
+
+2. Total number of departments :-
+
+SELECT COUNT(*) AS total_departments FROM DEPT;
+
+
+3. All the employees :-
+SELECT * FROM EMP;
+
+
+4. All the departments :-
+
+SELECT * FROM DEPT;
+
+5. Total salary paid for all employees :-
+
+SELECT SUM(SAL) AS total_salary FROM EMP;
+
+
+6. Total commission paid to all employees :-
+
+SELECT SUM(NVL(COMM, 0)) AS total_commission FROM EMP;
+
+7. Job titles of employees who get commissions :-
+
+SELECT DISTINCT JOB 
+FROM EMP 
+WHERE NVL(COMM, 0) > 0;
+
+8. System date :-
+
+SELECT SYSDATE FROM DUAL;
+
+9. Average salary paid to all employees :-
+
+SELECT AVG(SAL) AS avg_salary FROM EMP;
+
+10. Number of employees in each department :-
+
+SELECT DEPTNO, COUNT(*) AS num_employees 
+FROM EMP 
+GROUP BY DEPTNO;
+
+11. Total salary of employees in each department :-
+
+SELECT DEPTNO, SUM(SAL) AS total_salary 
+FROM EMP 
+GROUP BY DEPTNO;
+
+
+12. Number of employees under each job title :-
+
+SELECT JOB, COUNT(*) AS num_employees 
+FROM EMP 
+GROUP BY JOB;
+
+13. Average salary paid for each job title :-
+
+SELECT JOB, AVG(SAL) AS avg_salary 
+FROM EMP 
+GROUP BY JOB;
+
+14. Hire day, month, and year for each employee :-
+
+SELECT ENAME, TO_CHAR(HIREDATE, 'DD') AS hire_day,  TO_CHAR(HIREDATE, 'MM') AS hire_month, TO_CHAR(HIREDATE, 'YYYY') AS hire_year 
+FROM EMP;
+
+15. Sort employees department-wise :-
+
+SELECT * FROM EMP ORDER BY DEPTNO;
+
+16. Sort employees based on their job titles :-
+
+SELECT * FROM EMP ORDER BY JOB;
+
+17. Sort employees in descending order of their salaries :-
+
+SELECT * FROM EMP ORDER BY SAL DESC;
+
+18. Sort employees ascending by department and descending by salary :-
+
+SELECT * FROM EMP ORDER BY DEPTNO ASC, SAL DESC;
+
+19. Employees with names of 6 characters :-
+
+SELECT * FROM EMP WHERE LENGTH(ENAME) = 6;
+
+20. Maximum and minimum salary paid :-
+
+SELECT MAX(SAL) AS max_salary, MIN(SAL) AS min_salary FROM EMP;
+
+21. Maximum, minimum, average, and total salary in each department :-
+
+SELECT DEPTNO, 
+       MAX(SAL) AS max_salary, 
+       MIN(SAL) AS min_salary, 
+       AVG(SAL) AS avg_salary, 
+       SUM(SAL) AS total_salary 
+FROM EMP 
+GROUP BY DEPTNO;
+
+22. Sort employees by hire date :-
+
+SELECT * FROM EMP ORDER BY HIREDATE;
+
+23. Employee who joined latest :-
+
+SELECT * 
+FROM EMP 
+WHERE HIREDATE = (SELECT MAX(HIREDATE) FROM EMP);
+
+24. Oldest employee in the organization :-
+
+SELECT * 
+FROM EMP 
+WHERE HIREDATE = (SELECT MIN(HIREDATE) FROM EMP);
+
+
+25. Sort employees by hire year (descending) and department (ascending) :-
+
+SELECT * 
+FROM EMP 
+ORDER BY TO_CHAR(HIREDATE, 'YYYY') DESC, DEPTNO ASC;
+
+26. Employees earning salaries greater than or equal to the average salary :-
+
+SELECT * 
+FROM EMP 
+WHERE SAL >= (SELECT AVG(SAL) FROM EMP);
+
+27. Employees earning salaries less than or equal to the average salary :-
+
+SELECT * 
+FROM EMP 
+WHERE SAL <= (SELECT AVG(SAL) FROM EMP);
+
+28. Employees earning salaries between 2000 and 4000 :-
+
+SELECT * 
+FROM EMP 
+WHERE SAL BETWEEN 2000 AND 4000;
+
+29. Employees with the highest and lowest salaries :-
+
+SELECT * 
+FROM EMP 
+WHERE SAL = (SELECT MAX(SAL) FROM EMP)
+   OR SAL = (SELECT MIN(SAL) FROM EMP);
+
+30. Number of gifts needed for employees joining next month :-
+
+SELECT COUNT(*) AS gifts_needed 
+FROM EMP 
+WHERE TO_CHAR(HIREDATE, 'MM') = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'MM');
