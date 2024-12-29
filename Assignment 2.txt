@@ -1,0 +1,156 @@
+SELECT c.continent,cn.countryname FROM continents.c JOIN countries cn on c.contid=cn.continent ORDER BY c.continent;
+
+SELECT c.continent,count(cn.countryid) FROM continents cJOIN countries cn on c.contid=cn.continent group by c.continent ORDER BY c.continent;
+
+SELECT c.countryname FROM countries c LEFTJOIN car_makers cm on cm.country=c.countryid WHERE cm.id is null;
+
+SELECT c.countryname,cm.maker,cm.fullname FROM car_makers cm LEFTJOIN countries c on cm.country=c.countryid WHERE c.countryname='japan';
+
+SELECT c.countryname,cm.maker,cm.fullname FROM car_makers cm LEFTJOIN countries c on cm.country=c.countryid WHERE c.countryname='usa' or c.countryname='france';
+
+SELECT c.countryname, cn.continent,cm.maker FROM car_makers cm LEFTJOIN countries c on cm.country=c.countryidJOIN continents cn on c.continent=cn.contid WHERE cm.maker='volvo';
+
+SELECT md.model,cm.fullname FROM model_details md LEFTJOIN car_makers cm on md.maker=cm.id WHERE cm.maker='ford';
+
+SELECT count(md.model) as germany_models FROM countries c LEFTJOIN car_makers cm on c.countryid=cm.countryJOIN model_details md on cm.id=md.maker WHERE c.countryname='germany';
+
+SELECT md.model,cm.maker,cm.fullname FROM countries c LEFTJOIN car_makers cm on c.countryid=cm.countryJOIN model_details md on cm.id=md.maker WHERE c.countryname='japan';
+
+SELECT c.continent,cn.countryname,cm.maker,md.model,cd.mpg as max_mpg FROM continents c  LEFTJOIN countries cn on c.contid=cn.continent
+join car_makers cm on cn.countryid=cm.countryJOIN model_details md on cm.id=md.maker
+join car_names cs on md.model=cs.modelJOIN car_details cd on cs.id=cd.id WHERE cd.mpg=(SELECT max(mpg) FROM car_details);
+
+SELECT c.continent,cn.countryname,cm.maker,md.model,cd.mpg as max_mpg
+   FROM continents c 
+   LEFTJOIN countries cn on c.contid=cn.continent
+  JOIN car_makers cm on cn.countryid=cm.country
+  JOIN model_details md on cm.id=md.maker
+  JOIN car_names cs on md.model=cs.model
+  JOIN car_details cd on cs.id=cd.id
+   WHERE cd.mpg=(SELECT max(mpg) FROM car_details);
+
+   SELECT c.continent,cn.countryname,cm.maker,md.model,cd.mpg as min_mpg
+   FROM continents c 
+   LEFTJOIN countries cn on c.contid=cn.continent
+  JOIN car_makers cm on cn.countryid=cm.country
+  JOIN model_details md on cm.id=md.maker
+  JOIN car_names cs on md.model=cs.model
+  JOIN car_details cd on cs.id=cd.id
+   WHERE cd.mpg=(SELECT min(mpg) FROM car_details);
+
+SELECT c.continent,cn.countryname,cm.maker,md.model,cd.cylinders as max_cylinders
+   FROM continents c 
+   LEFTJOIN countries cn on c.contid=cn.continent
+  JOIN car_makers cm on cn.countryid=cm.country
+  JOIN model_details md on cm.id=md.maker
+  JOIN car_names cs on md.model=cs.model
+  JOIN car_details cd on cs.id=cd.id
+   WHERE cd.cylinders=(SELECT max(cylinders) FROM car_details);
+
+   SELECT c.continent,cn.countryname,cm.maker,md.model,cd.cylinders as min_cylinders
+   FROM continents c 
+   LEFTJOIN countries cn on c.contid=cn.continent
+  JOIN car_makers cm on cn.countryid=cm.country
+  JOIN model_details md on cm.id=md.maker
+  JOIN car_names cs on md.model=cs.model
+  JOIN car_details cd on cs.id=cd.id
+   WHERE cd.cylinders=(SELECT min(cylinders) FROM car_details);
+
+ SELECT c.continent,cn.countryname,cm.maker,md.model,cd.edispl as max_edispl
+   FROM continents c 
+   LEFTJOIN countries cn on c.contid=cn.continent
+  JOIN car_makers cm on cn.countryid=cm.country
+  JOIN model_details md on cm.id=md.maker
+  JOIN car_names cs on md.model=cs.model
+  JOIN car_details cd on cs.id=cd.id
+   WHERE cd.edispl=(SELECT max(edispl) FROM car_details);
+
+   SELECT c.continent,cn.countryname,cm.maker,md.model,cd.edispl as min_edispl
+   FROM continents c 
+   LEFTJOIN countries cn on c.contid=cn.continent
+  JOIN car_makers cm on cn.countryid=cm.country
+  JOIN model_details md on cm.id=md.maker
+  JOIN car_names cs on md.model=cs.model
+  JOIN car_details cd on cs.id=cd.id
+   WHERE cd.edispl=(SELECT min(edispl) FROM car_details);
+
+SELECT c.continent,cn.countryname,cm.maker,md.model,cd.horsepower as max_horsepower
+   FROM continents c 
+   LEFTJOIN countries cn on c.contid=cn.continent
+  JOIN car_makers cm on cn.countryid=cm.country
+  JOIN model_details md on cm.id=md.maker
+  JOIN car_names cs on md.model=cs.model
+  JOIN car_details cd on cs.id=cd.id
+   WHERE cd.horsepower=(SELECT max(horsepower) FROM car_details);
+
+   SELECT c.continent,cn.countryname,cm.maker,md.model,cd.horsepower as min_horsepower
+   FROM continents c 
+   LEFTJOIN countries cn on c.contid=cn.continent
+  JOIN car_makers cm on cn.countryid=cm.country
+  JOIN model_details md on cm.id=md.maker
+  JOIN car_names cs on md.model=cs.model
+  JOIN car_details cd on cs.id=cd.id
+   WHERE cd.horsepower=(SELECT min(horsepower) FROM car_details);
+
+ SELECT c.continent,cn.countryname,cm.maker,md.model,cd.weight as max_weight
+   FROM continents c 
+   LEFTJOIN countries cn on c.contid=cn.continent
+  JOIN car_makers cm on cn.countryid=cm.country
+  JOIN model_details md on cm.id=md.maker
+  JOIN car_names cs on md.model=cs.model
+  JOIN car_details cd on cs.id=cd.id
+   WHERE cd.weight=(SELECT max(weight) FROM car_details);
+
+   SELECT c.continent,cn.countryname,cm.maker,md.model,cd.weight as min_weight
+   FROM continents c 
+   LEFTJOIN countries cn on c.contid=cn.continent
+  JOIN car_makers cm on cn.countryid=cm.country
+  JOIN model_details md on cm.id=md.maker
+  JOIN car_names cs on md.model=cs.model
+  JOIN car_details cd on cs.id=cd.id
+   WHERE cd.weight=(SELECT min(weight) FROM car_details);
+
+SELECT c.continent,cn.countryname,cm.maker,md.model,cd.accel as max_accel
+   FROM continents c 
+   LEFTJOIN countries cn on c.contid=cn.continent
+  JOIN car_makers cm on cn.countryid=cm.country
+  JOIN model_details md on cm.id=md.maker
+  JOIN car_names cs on md.model=cs.model
+  JOIN car_details cd on cs.id=cd.id
+   WHERE cd.accel=(SELECT max(accel) FROM car_details);
+
+   SELECT c.continent,cn.countryname,cm.maker,md.model,cd.accel as min_accel
+   FROM continents c 
+   LEFTJOIN countries cn on c.contid=cn.continent
+  JOIN car_makers cm on cn.countryid=cm.country
+  JOIN model_details md on cm.id=md.maker
+  JOIN car_names cs on md.model=cs.model
+  JOIN car_details cd on cs.id=cd.id
+   WHERE cd.accel=(SELECT min(accel) FROM car_details);
+
+SELECT year,count(id) as max_cars
+    FROM car_details
+    group by year
+    ORDER BY max_cars desc
+    fetch first 1 rows only;
+
+SELECT year,count(id) as min_cars
+    FROM car_details
+    group by year
+    ORDER BY min_cars asc
+    fetch first 1 rows only;
+
+ SELECT year,min(mpg),max(mpg),round(avg(mpg),2),
+    min(cylinders),max(cylinders),round(avg(cylinders),2),
+    min(edispl),max(edispl),round(avg(edispl),2),
+    min(horsepower),max(horsepower),round(avg(horsepower),2),
+    min(weight),max(weight),round(avg(weight),2),
+    min(accel),max(accel),round(avg(accel),2)
+    FROM car_details
+    group by year ORDER BY year;
+
+SELECT round(avg(horsepower),2),round(avg(weight),2),round(avg(accel),2),
+    median(horsepower),median(weight),median(accel),
+    round(stddev(horsepower),2),round(stddev(weight),2),round(stddev(accel),2)
+    FROM car_details;
+
